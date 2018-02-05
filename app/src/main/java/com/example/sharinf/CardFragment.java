@@ -97,13 +97,14 @@ public class CardFragment extends Fragment {
         public ImageView likeImageView;
         public ImageView shareImageView;
 
-        public MyViewHolder(View v) {
+        public MyViewHolder(final View v) {
             super(v);
             titleTextView = (TextView) v.findViewById(R.id.titleTextView);
             coverImageView = (ImageView) v.findViewById(R.id.coverImageView);
             likeImageView = (ImageView) v.findViewById(R.id.likeImageView);
             shareImageView = (ImageView) v.findViewById(R.id.shareImageView);
             likeImageView.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
 
@@ -124,6 +125,9 @@ public class CardFragment extends Fragment {
 
 
                     }
+
+
+
 
                 }
             });
@@ -152,6 +156,14 @@ public class CardFragment extends Fragment {
 
 
 
+                }
+            });
+
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    v.getContext().startActivity(new Intent(v.getContext(),ActivityClick.class));
                 }
             });
 
