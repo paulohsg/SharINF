@@ -16,11 +16,19 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
+        Fragment fragment2 = fm.findFragmentById(R.id.fragmentContainer2);
 
         if (fragment == null) {
             fragment = new CardFragment();
             fm.beginTransaction()
                     .add(R.id.fragmentContainer, fragment)
+                    .commit();
+        }
+
+        if (fragment2 == null) {
+            fragment = new CardFragment2();
+            fm.beginTransaction()
+                    .add(R.id.fragmentContainer2, fragment)
                     .commit();
         }
     }
