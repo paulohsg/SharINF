@@ -215,7 +215,7 @@ public class CardFragment extends Fragment {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    v.getContext().startActivity(new Intent(v.getContext(),ActivityClick.class));
+                    v.getContext().startActivity(new Intent(v.getContext(),ActivityChart.class));
                 }
             });
         }

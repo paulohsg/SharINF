@@ -25,6 +25,10 @@
             android:name=".ListaDeAlunosActivity"
             android:label="@string/title_activity_click"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ActivityChart"
+            android:label="@string/title_activity_click"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
