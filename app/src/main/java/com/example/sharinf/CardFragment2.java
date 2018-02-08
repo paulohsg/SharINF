@@ -26,7 +26,7 @@ public class CardFragment2 extends Fragment {
     ArrayList<WonderModel> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
     String Wonders[] = {"Chichen Itza","Christ the Redeemer","Great Wall of China","Machu Picchu","Petra","Taj Mahal","Colosseum"};
-    int  Images[] = {R.drawable.chichen_itza,R.drawable.christ_the_redeemer,R.drawable.great_wall_of_china,R.drawable.machu_picchu,R.drawable.petra,R.drawable.taj_mahal,R.drawable.colosseum};
+    int  Images[] = {R.drawable.statistics,R.drawable.ranking,R.drawable.great_wall_of_china,R.drawable.machu_picchu,R.drawable.petra,R.drawable.taj_mahal,R.drawable.colosseum};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -26,13 +26,13 @@ public class CardFragment extends Fragment {
     ArrayList<Object> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
     String Wonders[] = {"Chichen Itza","Christ the Redeemer","Great Wall of China","Machu Picchu","Petra","Taj Mahal","Colosseum"};
-    int  Images[] = {R.drawable.chichen_itza,R.drawable.christ_the_redeemer,R.drawable.great_wall_of_china,R.drawable.machu_picchu,R.drawable.petra,R.drawable.taj_mahal,R.drawable.colosseum};
+    int  Images[] = {R.drawable.statistics,R.drawable.ranking,R.drawable.great_wall_of_china,R.drawable.machu_picchu,R.drawable.petra,R.drawable.taj_mahal,R.drawable.colosseum};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeList();
-        getActivity().setTitle("7 Wonders of the Modern World");
+        getActivity().setTitle("Início");
     }
 
     @Override
@@ -290,16 +290,16 @@ public class CardFragment extends Fragment {
 //        listitems.clear();
 
             WonderModel item = new WonderModel();
-            item.setCardName("card");
-            item.setImageResourceId(R.drawable.chichen_itza);
+            item.setCardName("Estatíscas");
+            item.setImageResourceId(R.drawable.statistics);
             item.setIsfav(0);
             item.setIsturned(0);
             listitems.add(item);
 
 
         WonderModel2 item2 = new WonderModel2();
-        item2.setCardName("card2");
-        item2.setImageResourceId(R.drawable.christ_the_redeemer);
+        item2.setCardName("Ranking");
+        item2.setImageResourceId(R.drawable.ranking);
         item2.setIsfav(0);
         item2.setIsturned(0);
         listitems.add(item2);
