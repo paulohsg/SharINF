@@ -23,7 +23,7 @@ package com.example.sharinf;
 
 public class CardFragment extends Fragment {
 
-    ArrayList<WonderModel> listitems = new ArrayList<>();
+    ArrayList<Object> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
     String Wonders[] = {"Chichen Itza","Christ the Redeemer","Great Wall of China","Machu Picchu","Petra","Taj Mahal","Colosseum"};
     int  Images[] = {R.drawable.chichen_itza,R.drawable.christ_the_redeemer,R.drawable.great_wall_of_china,R.drawable.machu_picchu,R.drawable.petra,R.drawable.taj_mahal,R.drawable.colosseum};
@@ -58,30 +58,97 @@ public class CardFragment extends Fragment {
 
     }
 
-    public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-        private ArrayList<WonderModel> list;
+    public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        private ArrayList<Object> list;
+        private final int RANKING = 0, CHART = 1;
 
-        public MyAdapter(ArrayList<WonderModel> Data) {
+        public MyAdapter(ArrayList<Object> Data) {
             list = Data;
         }
 
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             // create a new view
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.recycle_items, parent, false);
-            MyViewHolder holder = new MyViewHolder(view);
-            return holder;
+//            View view = LayoutInflater.from(parent.getContext())
+//                    .inflate(R.layout.recycle_items, parent, false);
+//            RecyclerView.ViewHolder holder = new RecyclerView.ViewHolder(view);
+//            return holder;
+
+            RecyclerView.ViewHolder viewHolder;
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+
+            switch (viewType) {
+                case RANKING:
+                    View v1 = inflater.inflate(R.layout.recycle_items, parent, false);
+                    viewHolder = new MyViewHolder1(v1);
+                    break;
+                case CHART:
+                    View v2 = inflater.inflate(R.layout.recycle_items2, parent, false);
+                    viewHolder = new MyViewHolder2(v2);
+                    break;
+                default:
+                    View v = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+                    viewHolder = viewHolder = new MyViewHolder1(v);
+                    break;
+            }
+            return viewHolder;
+
         }
 
         @Override
-        public void onBindViewHolder(final MyViewHolder holder, int position) {
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
-            holder.titleTextView.setText(list.get(position).getCardName());
-            holder.coverImageView.setImageResource(list.get(position).getImageResourceId());
-            holder.coverImageView.setTag(list.get(position).getImageResourceId());
-            holder.likeImageView.setTag(R.drawable.ic_like);
+//            holder.titleTextView.setText(list.get(position).getCardName());
+//            holder.coverImageView.setImageResource(list.get(position).getImageResourceId());
+//            holder.coverImageView.setTag(list.get(position).getImageResourceId());
+//            holder.likeImageView.setTag(R.drawable.ic_like);
 
+
+            switch (holder.getItemViewType()) {
+                case RANKING:
+                    MyViewHolder1 vh1 = (MyViewHolder1) holder;
+                    configureViewHolder1(vh1, position);
+                    break;
+                case CHART:
+                    MyViewHolder2 vh2 = (MyViewHolder2) holder;
+                    configureViewHolder2(vh2, position);
+                    break;
+                default:
+                    MyViewHolder2 vh = (MyViewHolder2) holder;
+                    configureViewHolder2(vh, position);
+                    break;
+            }
+
+        }
+
+        private void configureViewHolder1(MyViewHolder1 vh1, int position) {
+            WonderModel wonder = (WonderModel) list.get(position);
+            if (wonder != null) {
+                vh1.titleTextView.setText(wonder.getCardName());
+                vh1.coverImageView.setImageResource(wonder.getImageResourceId());
+                vh1.coverImageView.setTag(wonder.getImageResourceId());
+                vh1.likeImageView.setTag(R.drawable.ic_like);
+            }
+        }
+
+        private void configureViewHolder2(MyViewHolder2 vh2, int position) {
+            WonderModel2 wonder = (WonderModel2) list.get(position);
+            if (wonder != null) {
+                vh2.titleTextView.setText(wonder.getCardName());
+                vh2.coverImageView.setImageResource(wonder.getImageResourceId());
+                vh2.coverImageView.setTag(wonder.getImageResourceId());
+                vh2.likeImageView.setTag(R.drawable.ic_like);
+            }
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (list.get(position) instanceof WonderModel) {
+                return RANKING;
+            } else if (list.get(position) instanceof WonderModel2) {
+                return CHART;
+            }
+            return -1;
         }
 
         @Override
@@ -90,14 +157,14 @@ public class CardFragment extends Fragment {
         }
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder1 extends RecyclerView.ViewHolder {
 
         public TextView titleTextView;
         public ImageView coverImageView;
         public ImageView likeImageView;
         public ImageView shareImageView;
 
-        public MyViewHolder(final View v) {
+        public MyViewHolder1(final View v) {
             super(v);
             titleTextView = (TextView) v.findViewById(R.id.titleTextView);
             coverImageView = (ImageView) v.findViewById(R.id.coverImageView);
@@ -122,26 +189,13 @@ public class CardFragment extends Fragment {
                         likeImageView.setTag(R.drawable.ic_like);
                         likeImageView.setImageResource(R.drawable.ic_like);
                         Toast.makeText(getActivity(),titleTextView.getText()+" removed from favourites",Toast.LENGTH_SHORT).show();
-
-
                     }
-
-
-
-
                 }
             });
-
-
 
             shareImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
-
-
-
 
                     Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
                             "://" + getResources().getResourcePackageName(coverImageView.getId())
@@ -154,8 +208,6 @@ public class CardFragment extends Fragment {
                     shareIntent.setType("image/jpeg");
                     startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
 
-
-
                 }
             });
 
@@ -166,26 +218,93 @@ public class CardFragment extends Fragment {
                     v.getContext().startActivity(new Intent(v.getContext(),ActivityClick.class));
                 }
             });
+        }
+    }
 
 
+    public class MyViewHolder2 extends RecyclerView.ViewHolder {
 
+        public TextView titleTextView;
+        public ImageView coverImageView;
+        public ImageView likeImageView;
+        public ImageView shareImageView;
+
+        public MyViewHolder2(final View v) {
+            super(v);
+            titleTextView = (TextView) v.findViewById(R.id.titleTextView);
+            coverImageView = (ImageView) v.findViewById(R.id.coverImageView);
+            likeImageView = (ImageView) v.findViewById(R.id.likeImageView);
+            shareImageView = (ImageView) v.findViewById(R.id.shareImageView);
+            likeImageView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+
+                    int id = (int)likeImageView.getTag();
+                    if( id == R.drawable.ic_like){
+
+                        likeImageView.setTag(R.drawable.ic_liked);
+                        likeImageView.setImageResource(R.drawable.ic_liked);
+
+                        Toast.makeText(getActivity(),titleTextView.getText()+" added to favourites",Toast.LENGTH_SHORT).show();
+
+                    }else{
+
+                        likeImageView.setTag(R.drawable.ic_like);
+                        likeImageView.setImageResource(R.drawable.ic_like);
+                        Toast.makeText(getActivity(),titleTextView.getText()+" removed from favourites",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            shareImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                            "://" + getResources().getResourcePackageName(coverImageView.getId())
+                            + '/' + "drawable" + '/' + getResources().getResourceEntryName((int)coverImageView.getTag()));
+
+
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_STREAM,imageUri);
+                    shareIntent.setType("image/jpeg");
+                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
+
+                }
+            });
+
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    v.getContext().startActivity(new Intent(v.getContext(),ListaDeAlunosActivity.class));
+                }
+            });
         }
     }
 
     public void initializeList() {
-        listitems.clear();
-
-        for(int i =0;i<7;i++){
-
+//        listitems.clear();
 
             WonderModel item = new WonderModel();
-            item.setCardName(Wonders[i]);
-            item.setImageResourceId(Images[i]);
+            item.setCardName("card");
+            item.setImageResourceId(R.drawable.chichen_itza);
             item.setIsfav(0);
             item.setIsturned(0);
             listitems.add(item);
 
-        }
+
+        WonderModel2 item2 = new WonderModel2();
+        item2.setCardName("card2");
+        item2.setImageResourceId(R.drawable.christ_the_redeemer);
+        item2.setIsfav(0);
+        item2.setIsturned(0);
+        listitems.add(item2);
+
+
 
 
 
