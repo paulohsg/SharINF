@@ -1,8 +1,10 @@
 package com.example.sharinf;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -14,27 +16,33 @@ import java.util.List;
  * Created by ilha1 on 07/02/2018.
  */
 
-public class ListaDeAlunosActivity extends AppCompatActivity {
+public class ListaDeAlunosActivity extends Activity {
+
+    private ListView listView1;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_de_alunos);
-        List<Aluno> alunos = todosOsCursos();
 
-        ListView listaDeAlunos = (ListView) findViewById(R.id.lista);
+        Aluno aluno_data[] = new Aluno[]
+                {
+                        new Aluno(R.drawable.profile_icon, "João"),
+                        new Aluno(R.drawable.profile_icon, "Pedro"),
+                        new Aluno(R.drawable.profile_icon, "José"),
+                        new Aluno(R.drawable.profile_icon, "Augusto"),
+                        new Aluno(R.drawable.profile_icon, "Leonardo")
+                };
 
-        ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(this, android.R.layout.simple_list_item_1, alunos);
+        AlunoAdapter adapter = new AlunoAdapter(this,
+                R.layout.alunos_list_item, aluno_data);
 
-        listaDeAlunos.setAdapter(adapter);
-    }
+        listView1 = (ListView)findViewById(R.id.lista);
 
+        View header = (View)getLayoutInflater().inflate(R.layout.profile_header, null);
+        listView1.addHeaderView(header);
 
-    private List<Aluno> todosOsCursos() {
-        return new ArrayList<>(Arrays.asList(
-                new Aluno("Aluno1", "CC", "1"),
-                new Aluno("Aluno2", "CC", "2"),
-                new Aluno("Aluno3", "CC", "3")));
+        listView1.setAdapter(adapter);
     }
 
 }

@@ -6,46 +6,27 @@ package com.example.sharinf;
 
 public class Aluno {
 
-    private String nome;
-    private String curso;
-    private String colocacao;
+    private int icon;
+    private String title;
 
-
-    public Aluno(String nome, String curso, String colocacao) {
-        this.nome = nome;
-        this.curso = curso;
-        this.colocacao = colocacao;
+    public Aluno(int icon, String title) {
+        this.icon = icon;
+        this.title = title;
     }
 
-
-    public String getNome() {
-        return nome;
+    public int getIcon() {
+        return icon;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 
-    public String getCurso() {
-        return curso;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCurso(String curso) {
-        this.curso = curso;
+    public void setTitle(String title) {
+        this.title = title;
     }
-
-    public String getColocacao() {
-        return colocacao;
-    }
-
-    public void setColocacao(String colocacao) {
-        this.colocacao = colocacao;
-    }
-
-    @Override
-    public String toString() {
-        return "Curso: " + nome + " Curso: " +
-                curso + " Colocação: " + colocacao;
-    }
-
 }
